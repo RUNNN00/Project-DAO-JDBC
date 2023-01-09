@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,8 +23,42 @@ public class DepartmentDaoJDBC implements DepartmentDao {
 	
 	@Override
 	public void insert(Department obj) {
-		// TODO Auto-generated method stub
 		
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		
+		try {
+			conn.setAutoCommit(false);
+			
+			pst = conn.prepareStatement("insert into department (Name) values (?)", Statement.RETURN_GENERATED_KEYS);
+			
+			pst.setString(1, obj.getName());
+			
+			int rows = pst.executeUpdate();
+			if (rows > 0) {
+				rs = pst.getGeneratedKeys();
+				if (rs.next())
+					obj.setId(rs.getInt(1));
+			}
+			else {
+				throw new DbException("Unexpected Error! no rows affected");
+			}
+			conn.commit();
+			conn.setAutoCommit(true);
+		}
+		catch (SQLException e) {
+			try {
+				conn.rollback();
+				throw new DbException("Transaction rolled back caused by " + e.getMessage());
+			}
+			catch (SQLException rollBackError) {
+				throw new DbException("Error trying to rollback caused by " + rollBackError.getMessage());
+			}
+		}
+		finally {
+			DB.closeResultSet(rs);
+			DB.closeStatement(pst);
+		}		
 	}
 
 	@Override

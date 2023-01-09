@@ -21,5 +21,10 @@ public class Program2 {
 		for (Department obj : departments) {
 			System.out.println(obj);
 		}
+		
+		System.out.println("\n==== TEST 3: Department insert ====");
+		Department dep2 = new Department(null, "Public Relationship");
+		departmentDao.insert(dep2);
+		System.out.println("New department inserted: " + dep2);
 	}
 }
