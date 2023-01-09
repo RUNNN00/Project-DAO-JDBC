@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import java.sql.Statement;
 
 import db.DB;
@@ -32,6 +31,8 @@ public class SellerDaoJDBC implements SellerDao {
 		ResultSet rs = null;
 
 		try {
+			conn.setAutoCommit(false);
+			
 			pst = conn.prepareStatement("insert into seller "
 					+ "(Name, Email, BirthDate, BaseSalary, DepartmentId) "
 					+ "values " + "(?, ?, ?, ?, ?)",
@@ -54,13 +55,23 @@ public class SellerDaoJDBC implements SellerDao {
 			} else {
 				throw new DbException("Unexpected error! No rows affected");
 			}
-		} catch (SQLException e) {
-			throw new DbException(e.getMessage());
-		} finally {
+			
+			conn.commit();
+			conn.setAutoCommit(true);
+		}
+		catch (SQLException e) {
+			try {
+				conn.rollback();
+				throw new DbException("Transaction rolled back caused by " + e.getMessage());
+			}
+			catch (SQLException rollBackError) {
+				throw new DbException("Error trying to rollback caused by " + rollBackError.getMessage());
+			}
+		}
+		finally {
 			DB.closeStatement(pst);
 			DB.closeResultSet(rs);
 		}
-
 	}
 
 	@Override
@@ -69,6 +80,8 @@ public class SellerDaoJDBC implements SellerDao {
 		PreparedStatement pst = null;
 		
 		try {
+			conn.setAutoCommit(false);
+			
 			pst = conn.prepareStatement("update seller "
 					+ "set Name = ?, Email = ?, BirthDate = ?, BaseSalary = ?, DepartmentId = ? "
 					+ "where Id = ? ");
@@ -81,10 +94,21 @@ public class SellerDaoJDBC implements SellerDao {
 			pst.setInt(6, obj.getId());
 
 			pst.executeUpdate();
+			
+			conn.commit();
+			conn.setAutoCommit(true);
 
-		} catch (SQLException e) {
-			throw new DbException(e.getMessage());
-		} finally {
+		}
+		catch (SQLException e) {
+			try {
+				conn.rollback();
+				throw new DbException("Transaction rolled back caused by " + e.getMessage());
+			}
+			catch (SQLException rollBackError) {
+				throw new DbException("Error trying to rollback caused by " + rollBackError.getMessage());
+			}
+		}
+		finally {
 			DB.closeStatement(pst);
 		}
 	}
@@ -109,7 +133,6 @@ public class SellerDaoJDBC implements SellerDao {
 		finally {
 			DB.closeStatement(pst);
 		}
-
 	}
 
 	@Override
