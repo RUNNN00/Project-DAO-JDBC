@@ -63,8 +63,34 @@ public class DepartmentDaoJDBC implements DepartmentDao {
 
 	@Override
 	public void update(Department obj) {
-		// TODO Auto-generated method stub
 		
+		PreparedStatement pst = null;
+		
+		try {
+			conn.setAutoCommit(false);
+			
+			pst = conn.prepareStatement("update department set Name = ? where Id = ?");
+			
+			pst.setString(1, obj.getName());
+			pst.setInt(2, obj.getId());
+			
+			pst.executeUpdate();
+			
+			conn.commit();
+			conn.setAutoCommit(true);
+		}
+		catch (SQLException e) {
+			try {
+				conn.rollback();
+				throw new DbException("Transaction rolled back caused by " + e.getMessage());
+			}
+			catch (SQLException rollBackError) {
+				throw new DbException("Error trying to rollback caused by " + rollBackError.getMessage());
+			}
+		}
+		finally {
+			DB.closeStatement(pst);
+		}		
 	}
 
 	@Override

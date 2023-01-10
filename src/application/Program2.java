@@ -27,8 +27,14 @@ public class Program2 {
 		departmentDao.insert(dep2);
 		System.out.println("New department inserted: " + dep2);
 		
-		System.out.println("\n==== TEST 3: Department delete ====");
-		departmentDao.deleteById(8);
+		System.out.println("\n==== TEST 4: Department delete ====");
+		departmentDao.deleteById(14);
 		System.out.println("delete test completed\n");
+		
+		System.out.println("==== TEST 5: Department update ====");
+		dep2.setName("Designer");
+		dep2.setId(2);
+		departmentDao.update(dep2);
+		System.out.println("Update department completed");
 	}
 }
