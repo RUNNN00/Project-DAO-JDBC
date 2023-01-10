@@ -47,11 +47,11 @@ INSERT INTO seller (Name, Email, BirthDate, BaseSalary, DepartmentId) VALUES
 
 # Modelo de Relacional
 
-![Diagrama de Classes project DAO.jpeg](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/86446a52-06ce-4273-b49e-85316c756221/Diagrama_de_Classes_project_DAO.jpeg)
+![Diagrama de Classes project DAO.jpeg](readmeImages/modeloRelacional.jpeg)
 
 # Entidades usadas
 
-![Entidades.jpg](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/a85a06c1-ddf9-4829-803f-1c05fb7c0199/Entidades.jpg)
+![Entidades.jpg](readmeImages/Entidades.jpg)
 
 Ambas as entidades possuem as seguintes implementações:
 
