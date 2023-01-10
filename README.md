@@ -1,14 +1,13 @@
 # Project-DAO-JDBC
 
-Projeto de aprendizagem mostrando a conexão da aplicação Java com banco de dados MySQL utilizando o padrão de DAO.
+Projeto de aprendizagem mostrando a conexão da aplicação Java com banco de dados MySQL utilizando o padrão DAO.
 
-Curso **********Udemy**********
+Curso **Udemy**
 
-Professor **********************Nelio Alves**********************
+Professor **Nelio Alves**
 
----
 
-# Base de dados usado no projeto
+## Base de dados usado no projeto
 
 Criação do banco
 
@@ -45,11 +44,11 @@ INSERT INTO seller (Name, Email, BirthDate, BaseSalary, DepartmentId) VALUES
   ('Alex Pink','bob@gmail.com','1997-03-04 00:00:00',3000,2);
 ```
 
-# Modelo de Relacional
+## Modelo Relacional
 
 ![Diagrama de Classes project DAO.jpeg](readmeImages/modeloRelacional.jpeg)
 
-# Entidades usadas
+## Entidades usadas
 
 ![Entidades.jpg](readmeImages/Entidades.jpg)
 
@@ -61,14 +60,14 @@ Ambas as entidades possuem as seguintes implementações:
 - toString
 - Implementar a interface Serializable
 
-# Implementações JDBC
+## Implementações JDBC
 
 O projeto se resume a implementação do algoritmo de conexão com o banco de dados nas entidades DaoJDBC.
 
-As entidades *************SellerDaoJDBC************* e *****************DepartmentDaoJDBC***************** possuem as implementações:
+As entidades *SellerDaoJDBC* e *DepartmentDaoJDBC* possuem as implementações:
 
 - findById
-- findByDepartment → somente em *************SellerDaoJDBC*************
+- findByDepartment → somente em *SellerDaoJDBC*
 - findAll
 - insert
 - update
